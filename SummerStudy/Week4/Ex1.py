@@ -12,7 +12,7 @@ end = dt.datetime(2021, 7, 1)
 df = yf.Ticker(index)
 df = df.history(start=start, end=end)
 
-df = df[df['Volume'] != 0]
+df = df[df['Volume'] != 0] # 수한님 질문
 
 fig, ax = plt.subplots(figsize=(12,8))
 
