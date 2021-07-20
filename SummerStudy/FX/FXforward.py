@@ -37,7 +37,7 @@ class FXF():
   def KRW_CURVE(self, date):
     return KRWCCS_CURVE(date, GET_QUOTE(date, 'KRW'))
 
-  def PRICING(self, usd_curve, krw_Curve, fx_spot):
+  def PRICING(self, usd_curve, krw_curve, fx_spot):
     #  Handles of Market Variables
     usd_curve_handle = qe.YieldTermStructureHandle(usd_curve)
     krw_curve_handle = qe.YieldTermStructureHandle(krw_curve)
@@ -67,7 +67,7 @@ class FXF():
 
     # FX Forward Price when 1% down
     down_fx = self.fx_spot * (1 - percentage)
-    down_fxf = self.PRICING(self.usd_curve, self.krw_curve, donw_fx)
+    down_fxf = self.PRICING(self.usd_curve, self.krw_curve, down_fx)
 
     # FX Delta
     fx_delta = (up_fxf - down_fxf) / 2
