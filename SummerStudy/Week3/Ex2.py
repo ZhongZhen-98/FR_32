@@ -4,8 +4,8 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import matplotlib.pyplot as plt
 import numpy as np
-import mpl_finance
-import mplfinance as mpf # 이거 찾아보자!
+# import mpl_finance
+import mplfinance as mpf
 
 # 종목코드 정보가 있는 링크의 테이블을 데이터프레임으로 가져오기
 code_df = pd.read_html('http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13', header=0)[0]
@@ -45,11 +45,12 @@ df = df.loc[::-1]
 df.index = pd.to_datetime(df.index, format="%Y.%m.%d") 
 fig = plt.figure(figsize=(10,10))
 ax = fig.add_subplot(1,1,1)
-print(df)
+mpf.plot(df[:100],type='candle')
+# print(df)
 
-# plt.plot(df.index, df['종가'])
+# # plt.plot(df.index, df['종가'])
+# # plt.show()
+
+# mpl_finance.candlestick2_ohlc(ax, df['시가'], df['고가'], df['저가'], df['종가'], width=0.5, colorup='r', colordown='b')
+
 # plt.show()
-
-mpl_finance.candlestick2_ohlc(ax, df['시가'], df['고가'], df['저가'], df['종가'], width=0.5, colorup='r', colordown='b')
-
-plt.show()
