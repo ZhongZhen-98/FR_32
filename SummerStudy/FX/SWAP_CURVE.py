@@ -13,7 +13,7 @@ def GET_QUOTE(today, ticker):
     
     # Import Data from Excel
     xw.App(visible=False)
-    wb = xw.Book('./Data.xlsx')
+    wb = xw.Book('./Data.xlsx') # 같은 폴더에서 시작
     
     if ticker == 'USD':
         sht = wb.sheets('USDIRS')
