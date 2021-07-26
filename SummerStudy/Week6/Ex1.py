@@ -1,3 +1,5 @@
+# NOTE 시간이 엄청 걸리니 주의
+
 import pandas as pd
 import simfin as sf
 
