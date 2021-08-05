@@ -5,15 +5,15 @@ from sklearn.datasets import load_boston
 from sklearn.linear_model import LinearRegression
 
 boston_dataset = load_boston()
-
 x = pd.DataFrame(boston_dataset.data, columns=boston_dataset.feature_names)
+print(x)
 x_rm = pd.DataFrame(x['RM'][:500])
 x_rm_test = pd.DataFrame(x['RM'][500:])
 print(x_rm)
 print(x_rm_test)
 
 y = pd.DataFrame(boston_dataset.target[:500], columns=[['MEDV']])
-
+print(y)
 
 print(pd.concat([y, x_rm], axis=1).corr())
 
