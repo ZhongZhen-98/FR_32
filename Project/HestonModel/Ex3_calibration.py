@@ -12,7 +12,7 @@ calendar = ql.UnitedStates()
 
 calculation_date = ql.Date(6, 11, 2015)
 
-spot = 416.06
+spot = 659.37
 ql.Settings.instance().evaluationDate = calculation_date
 
 dividend_yield = ql.QuoteHandle(ql.SimpleQuote(0.0))
@@ -70,7 +70,7 @@ black_var_surface = ql.BlackVarianceSurface(
 
 strike = 600.0
 expiry = 1.2 # years
-print(black_var_surface.blackVol(expiry, strike))
+# print(black_var_surface.blackVol(expiry, strike))
 
 # dummy parameters
 v0 = 0.01; kappa = 0.2; theta = 0.02; rho = -0.75; sigma = 0.5;
@@ -84,7 +84,7 @@ engine = ql.AnalyticHestonEngine(model)
 
 heston_helpers = []
 black_var_surface.setInterpolation("bicubic")
-one_year_idx = 3 # 12th row in data is for 1 year expiry (하려는 개월 수 - 1) 
+one_year_idx = 11 # 12th row in data is for 1 year expiry
 date = expiration_dates[one_year_idx]
 for j, s in enumerate(strikes):
     t = (date - calculation_date )
@@ -107,7 +107,7 @@ print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % (theta, kappa, s
 
 avg = 0.0
 
-print("%15s %15s %15s %20s"% (
+print("%15s %15s %15s %20s" % (
     "Strikes", "Market Value", 
      "Model Value", "Relative Error (%)"))
 print("="*70)
