@@ -105,3 +105,14 @@ theta, kappa, sigma, rho, v0 = model3.params()
 print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
     (theta, kappa, sigma, rho, v0))
 error = calibration_report(heston_helpers3, grid_data3, detailed=0)
+
+## 여기는 필요할까. Pricing
+maturity_date = ql.Date(15, 1, 2016) # 만기일 (일, 월, 년) check
+strike_price = 130 # 행사가 check
+option_type = ql.Option.Call
+payoff = ql.PlainVanillaPayoff(option_type, strike_price)
+exercise = ql.EuropeanExercise(maturity_date)
+european_option = ql.VanillaOption(payoff, exercise)
+european_option.setPricingEngine(engine3)
+h_price = european_option.NPV()
+print("The Heston model price is",h_price)
