@@ -5,26 +5,15 @@ from math import pow, sqrt
 import numpy as np
 from scipy.optimize import least_squares
 
-day_count = ql.Actual365Fixed()
-calendar = ql.UnitedStates()
-calculation_date = ql.Date(8, 10, 2021)
-
-spot = 659.37
-ql.Settings.instance().evaluationDate = calculation_date
-
-risk_free_rate = 0.01
-dividend_rate = 0.0
-yield_ts = ql.YieldTermStructureHandle(
-    ql.FlatForward(calculation_date, risk_free_rate, day_count))
-dividend_ts = ql.YieldTermStructureHandle(
-    ql.FlatForward(calculation_date, dividend_rate, day_count))
-
-expiration_dates = [ql.Date(30,10,2021), ql.Date(30,11,2021), ql.Date(30,12,2021)]
-strikes = [74500, 74750, 75000, 75250, 75500, 75750, 76000]
-data = [
-[10, 5, 5, 5, 5, 5, 5],
-[220, 130, 80, 50, 30, 20, 15],
-[320, 270, 160, 120, 100, 80, 40]]
+def setup_model(_yield_ts, _dividend_ts, _spot, 
+                init_condition=(0.02,0.2,0.5,0.1,0.01)):
+    theta, kappa, sigma, rho, v0 = init_condition
+    process = ql.HestonProcess(_yield_ts, _dividend_ts, 
+                           ql.QuoteHandle(ql.SimpleQuote(_spot)), 
+                           v0, kappa, theta, sigma, rho)
+    model = ql.HestonModel(process)
+    engine = ql.AnalyticHestonEngine(model) 
+    return model, engine
 
 def setup_helpers(engine, expiration_dates, strikes, 
                   data, ref_date, spot, yield_ts, 
@@ -78,15 +67,28 @@ def calibration_report(helpers, grid_data, detailed=False):
     print("Average Abs Error (%%) : %5.9f" % (avg))
     return avg
 
-def setup_model(_yield_ts, _dividend_ts, _spot, 
-                init_condition=(0.02,0.2,0.5,0.1,0.01)):
-    theta, kappa, sigma, rho, v0 = init_condition
-    process = ql.HestonProcess(_yield_ts, _dividend_ts, 
-                           ql.QuoteHandle(ql.SimpleQuote(_spot)), 
-                           v0, kappa, theta, sigma, rho)
-    model = ql.HestonModel(process)
-    engine = ql.AnalyticHestonEngine(model) 
-    return model, engine
+# EUR/USD 옵션: 날짜 계산 방법
+day_count = ql.Actual365Fixed()
+calendar = ql.UnitedStates()
+calculation_date = ql.Date(8, 10, 2021)
+
+spot = 77000
+ql.Settings.instance().evaluationDate = calculation_date
+
+risk_free_rate = 0.01
+dividend_rate = 0.0
+yield_ts = ql.YieldTermStructureHandle(
+    ql.FlatForward(calculation_date, risk_free_rate, day_count))
+dividend_ts = ql.YieldTermStructureHandle(
+    ql.FlatForward(calculation_date, dividend_rate, day_count))
+
+# MATRIXXX
+expiration_dates = [ql.Date(30,10,2021), ql.Date(30,11,2021), ql.Date(30,12,2021)]
+strikes = [74500, 74750, 75000, 75250, 75500, 75750, 76000]
+data = [
+[10, 5, 5, 5, 5, 5, 5],
+[220, 130, 80, 50, 30, 20, 15],
+[320, 270, 160, 120, 100, 80, 40]]
 
 
 
