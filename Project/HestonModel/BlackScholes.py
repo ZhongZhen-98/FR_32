@@ -1,3 +1,4 @@
+## 여기에서 그릭스 구하는거 사용
 import QuantLib as ql
 
 valuationDate = ql.Date(14, 6, 2019)
