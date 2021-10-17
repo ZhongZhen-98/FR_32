@@ -1,7 +1,8 @@
 from pykiwoom.kiwoom import *
+import pprint
 
 kiwoom = Kiwoom()
 kiwoom.CommConnect(block=True)
 
-name = kiwoom.GetMasterCodeName("005930")
-print(name)
+tickers = kiwoom.GetThemeGroupCode('141')
+print(tickers)
