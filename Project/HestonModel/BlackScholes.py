@@ -2,7 +2,7 @@
 import QuantLib as ql
 
 # NOTE 입력 필요
-valuationDate = ql.Date(14, 6, 2019)
+valuationDate = ql.Date(25, 10, 2021)
 ql.Settings.instance().evaluationDate = valuationDate
 
 # NOTE 여기 바꿔주기
@@ -11,10 +11,10 @@ dayCount = ql.ActualActual()
 
 # Simple Quote Objects
 # NOTE 입력 필요
-underlying_qt = ql.SimpleQuote(270.48)
+underlying_qt = ql.SimpleQuote(1.16565)
 dividend_qt = ql.SimpleQuote(0.0)
 riskfreerate_qt = ql.SimpleQuote(0.01)
-volatility_qt = ql.SimpleQuote(0.13)
+volatility_qt = ql.SimpleQuote(0.0019)
 
 # Quote Handle Objects
 u_qhd = ql.QuoteHandle(underlying_qt)
@@ -39,8 +39,8 @@ engine = ql.AnalyticEuropeanEngine(process)
 # Option Objects
 # NOTE 입력 필요
 option_type = ql.Option.Call
-strikePrice = 272
-expiryDate = ql.Date(12, 12, 2019)
+strikePrice = 1.0100
+expiryDate = ql.Date(3, 12, 2021)
 exercise = ql.EuropeanExercise(expiryDate)
 payoff = ql.PlainVanillaPayoff(option_type, strikePrice)
 option = ql.VanillaOption(payoff, exercise)
@@ -55,6 +55,14 @@ print('Option Gamma = ', round(option.gamma(), 4))
 print('Option Theta = ', round(option.thetaPerDay(), 4))
 print('Option Vega = ', round(option.vega() / 100, 4))
 print('Option Rho = ', round(option.rho() / 100, 4))
+print('\n')
+
+print('Option Premium = ', option.NPV())
+print('Option Delta = ', option.delta())
+print('Option Gamma = ', option.gamma())
+print('Option Theta = ', option.thetaPerDay())
+print('Option Vega = ', option.vega() / 100)
+print('Option Rho = ', option.rho() / 100)
 print('\n')
 
 # # Automatic Re-Pricing

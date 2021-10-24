@@ -23,12 +23,13 @@ flat_ts = ql.YieldTermStructureHandle(
 dividend_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, dividend_rate, day_count))
 
-expiration_dates = [ql.Date(30,10,2021), ql.Date(30,11,2021), ql.Date(30,12,2021)]
-strikes = [74500, 74750, 75000, 75250, 75500, 75750, 76000]
+expiration_dates = [ql.Date(30,12,2021), ql.Date(30,1,2022), ql.Date(28,2,2022), ql.Date(30,3,2022) ]
+strikes = [11400.0, 11450.0, 11500.0, 11550.0, 11600.0, 11650.0, 11700.0, 11750.0, 11800.0, 11850.0]
 data = [
-[10, 5, 5, 5, 5, 5, 5],
-[220, 130, 80, 50, 30, 20, 15],
-[320, 270, 160, 120, 100, 80, 40]]
+[0.0248, 0.0205, 0.0164, 0.0128, 0.0096, 0.0070, 0.0049, 0.0033, 0.0022, 0.0014],
+[0.0250, 0.0211, 0.0176, 0.0144, 0.0115, 0.0091, 0.0070, 0.0053, 0.0040, 0.0030],
+[0.0265, 0.0229, 0.0195, 0.0164, 0.0136, 0.0111, 0.0090, 0.0072, 0.0057, 0.0044],
+[0.0280, 0.0245, 0.0211, 0.0181, 0.0153, 0.0128, 0.0106, 0.0087, 0.0071, 0.0057]]
 
 implied_vols = ql.Matrix(len(strikes), len(expiration_dates))
 for i in range(implied_vols.rows()):
@@ -40,7 +41,7 @@ black_var_surface = ql.BlackVarianceSurface(
     expiration_dates, strikes, 
     implied_vols, day_count)
 
-strike = 75000
+strike = 11650
 expiry = 1/12 # years
 print(black_var_surface.blackVol(expiry, strike))
 
