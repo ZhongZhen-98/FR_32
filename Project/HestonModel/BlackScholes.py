@@ -1,13 +1,16 @@
 ## 여기에서 그릭스 구하는거 사용!!
 import QuantLib as ql
 
+# NOTE 입력 필요
 valuationDate = ql.Date(14, 6, 2019)
 ql.Settings.instance().evaluationDate = valuationDate
 
+# NOTE 여기 바꿔주기
 calendar = ql.SouthKorea()
 dayCount = ql.ActualActual()
 
 # Simple Quote Objects
+# NOTE 입력 필요
 underlying_qt = ql.SimpleQuote(270.48)
 dividend_qt = ql.SimpleQuote(0.0)
 riskfreerate_qt = ql.SimpleQuote(0.01)
@@ -34,6 +37,7 @@ process = ql.BlackScholesMertonProcess(u_qhd, d_thd, r_thd, v_thd)
 engine = ql.AnalyticEuropeanEngine(process)
 
 # Option Objects
+# NOTE 입력 필요
 option_type = ql.Option.Call
 strikePrice = 272
 expiryDate = ql.Date(12, 12, 2019)
@@ -53,25 +57,25 @@ print('Option Vega = ', round(option.vega() / 100, 4))
 print('Option Rho = ', round(option.rho() / 100, 4))
 print('\n')
 
-# Automatic Re-Pricing
-underlying_qt.setValue(275)
-print('Option Premium = ', round(option.NPV(), 2))
-print('Option Delta = ', round(option.delta(), 4))
-print('Option Gamma = ', round(option.gamma(), 4))
-print('Option Theta = ', round(option.thetaPerDay(), 4))
-print('Option Vega = ', round(option.vega() / 100, 4))
-print('Option Rho = ', round(option.rho() / 100, 4))
-print('\n')
+# # Automatic Re-Pricing
+# underlying_qt.setValue(275)
+# print('Option Premium = ', round(option.NPV(), 2))
+# print('Option Delta = ', round(option.delta(), 4))
+# print('Option Gamma = ', round(option.gamma(), 4))
+# print('Option Theta = ', round(option.thetaPerDay(), 4))
+# print('Option Vega = ', round(option.vega() / 100, 4))
+# print('Option Rho = ', round(option.rho() / 100, 4))
+# print('\n')
 
-# Implied Volatility
-underlying_qt.setValue(270.48)
-mkt_price = 8.21
-implied_volatility = option.impliedVolatility(mkt_price, process)
-volatility_qt.setValue(implied_volatility)
-print('Option Premium = ', round(option.NPV(), 2))
-print('Option Delta = ', round(option.delta(), 4))
-print('Option Gamma = ', round(option.gamma(), 4))
-print('Option Theta = ', round(option.thetaPerDay(), 4))
-print('Option Vega = ', round(option.vega() / 100, 4))
-print('Option Rho = ', round(option.rho() / 100, 4))
-print('\n')
+# # Implied Volatility
+# underlying_qt.setValue(270.48)
+# mkt_price = 8.21
+# implied_volatility = option.impliedVolatility(mkt_price, process)
+# volatility_qt.setValue(implied_volatility)
+# print('Option Premium = ', round(option.NPV(), 2))
+# print('Option Delta = ', round(option.delta(), 4))
+# print('Option Gamma = ', round(option.gamma(), 4))
+# print('Option Theta = ', round(option.thetaPerDay(), 4))
+# print('Option Vega = ', round(option.vega() / 100, 4))
+# print('Option Rho = ', round(option.rho() / 100, 4))
+# print('\n')
