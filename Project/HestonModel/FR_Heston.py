@@ -117,11 +117,7 @@ for i in range(len(data)):
 
 model, engine = setup_model(
     yield_ts, dividend_ts, spot, 
-    init_condition=(0.43,5,0.6,-0.5,0.5))
-    # 0.02, 0.2, 0.5, 0.1, 0.01  코딩 첫번째
-    # 0.07, 0.5, 0.1, 0.1, 0.1  코딩 두번째
-    # 0.05,5,0.6,-0.5,0.5  논문내용
-    # theta, kappa, sigma, rho, v0 = init_condition
+    init_condition=(0.43,5,0.6,-0.5,0.5)) #dummy
 heston_helpers, grid_data = setup_helpers(
     engine, expiration_dates, strikes, data,
     calculation_date, spot, yield_ts, dividend_ts
