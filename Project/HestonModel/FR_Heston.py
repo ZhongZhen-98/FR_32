@@ -70,12 +70,12 @@ def calibration_report(helpers, grid_data, detailed=False):
 # EUR/USD 옵션: 날짜 계산 방법
 day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
-calculation_date = ql.Date(25, 10, 2021)
+calculation_date = ql.Date(1, 11, 2021)
 
-spot = 11656.5
+spot = 11580.5
 ql.Settings.instance().evaluationDate = calculation_date
 
-risk_free_rate = 0.01
+risk_free_rate = 0.0
 dividend_rate = 0.0
 yield_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, risk_free_rate, day_count))
@@ -83,60 +83,53 @@ dividend_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, dividend_rate, day_count))
 
 # MATRIXXX
-expiration_dates = [ql.Date(5,11,2021), ql.Date(3,12,2021), ql.Date(7,1,2022),
+expiration_dates = [ql.Date(3,12,2021), ql.Date(7,1,2022),
                     ql.Date(4,2,2022), ql.Date(4,3,2022), ql.Date(8,4,2022), 
                     ql.Date(6,5,2022), ql.Date(3,6,2022), ql.Date(8,7,2022),
                     ql.Date(5,8,2022), ql.Date(9,9,2022), ql.Date(7,10,2022), 
-                    ql.Date(4,11,2022), ql.Date(9,12,2022), ql.Date(3,3,2023),
+                    ql.Date(9,12,2022), ql.Date(3,3,2023),
                     ql.Date(9,6,2023), ql.Date(8,9,2023)]
 
 # https://www.cmegroup.com/markets/fx/g10/euro-fx.quotes.options.html#optionProductId=8116&strikeRange=ALL&expiration=8116-X1&overrideFuture=6EX1
 
-strikes = [527.50, 560.46, 593.43, 626.40, 659.37, 692.34, 725.31, 758.28]
+strikes = [11000.0, 11100.0, 11200.0, 11300.0, 11400.0, 11500.0, 11600.0, 11700.0]
 data = [
-[0.37819, 0.34177, 0.30394, 0.27832, 0.26453, 0.25916, 0.25941, 0.26127],
-[0.3445, 0.31769, 0.2933, 0.27614, 0.26575, 0.25729, 0.25228, 0.25202],
-[0.37419, 0.35372, 0.33729, 0.32492, 0.31601, 0.30883, 0.30036, 0.29568],
-[0.37498, 0.35847, 0.34475, 0.33399, 0.32715, 0.31943, 0.31098, 0.30506],
-[0.35941, 0.34516, 0.33296, 0.32275, 0.31867, 0.30969, 0.30239, 0.29631],
-[0.35521, 0.34242, 0.33154, 0.3219, 0.31948, 0.31096, 0.30424, 0.2984],
-[0.35442, 0.34267, 0.33288, 0.32374, 0.32245, 0.31474, 0.30838, 0.30283],
-[0.35384, 0.34286, 0.33386, 0.32507, 0.3246, 0.31745, 0.31135, 0.306],
-[0.35338, 0.343, 0.33464, 0.32614, 0.3263, 0.31961, 0.31371, 0.30852],
-[0.35301, 0.34312, 0.33526, 0.32698, 0.32766, 0.32132, 0.31558, 0.31052],
-[0.35272, 0.34322, 0.33574, 0.32765, 0.32873, 0.32267, 0.31705, 0.31209],
-[0.35246, 0.3433, 0.33617, 0.32822, 0.32965, 0.32383, 0.31831, 0.31344],
-[0.35226, 0.34336, 0.33651, 0.32869, 0.3304, 0.32477, 0.31934, 0.31453],
-[0.35207, 0.34342, 0.33681, 0.32911, 0.33106, 0.32561, 0.32025, 0.3155],
-[0.35171, 0.34327, 0.33679, 0.32931, 0.3319, 0.32665, 0.32139, 0.31675],
-[0.35128, 0.343, 0.33658, 0.32937, 0.33276, 0.32769, 0.32255, 0.31802],
-[0.35086, 0.34274, 0.33637, 0.32943, 0.3336, 0.32872, 0.32368, 0.31927]]
+[0.0570, 0.0471, 0.0373, 0.0278, 0.0190, 0.0115, 0.0060, 0.0027],
+[0.0601, 0.0504, 0.0409, 0.0319, 0.0236, 0.0164, 0.0105, 0.0063],
+[0.0605, 0.0510, 0.0419, 0.0333, 0.0254, 0.0185, 0.0129, 0.0085],
+[0.0611, 0.0519, 0.0430, 0.0346, 0.0270, 0.0202, 0.0146, 0.0101],
+[0.0643, 0.0553, 0.0466, 0.0384, 0.0308, 0.0239, 0.0180, 0.0132],
+[0.0657, 0.0569, 0.0485, 0.0405, 0.0331, 0.0264, 0.0205, 0.0155],
+[0.0664, 0.0577, 0.0494, 0.0416, 0.0343, 0.0277, 0.0218, 0.0168],
+[0.0699, 0.0613, 0.0530, 0.0451, 0.0377, 0.0310, 0.0251, 0.0199],
+[0.0706, 0.0621, 0.0539, 0.0461, 0.0389, 0.0323, 0.0264, 0.0212],
+[0.0713, 0.0629, 0.0549, 0.0473, 0.0402, 0.0337, 0.0278, 0.0226],
+[0.0750, 0.0666, 0.0585, 0.0508, 0.0436, 0.0370, 0.0310, 0.0256],
+[0.0765, 0.0683, 0.0604, 0.0529, 0.0459, 0.0394, 0.0334, 0.0281],
+[0.0814, 0.0733, 0.0656, 0.0582, 0.0513, 0.0447, 0.0387, 0.0332],
+[0.0872, 0.0792, 0.0715, 0.0642, 0.0572, 0.0507, 0.0445, 0.0389],
+[0.0916, 0.0836, 0.0760, 0.0687, 0.0617, 0.0551, 0.0489, 0.0432]]
 
 
+for i in range(len(data)):
+  for j in range(len(data[i])):
+    data[i][j] *=12500.0
 
-model3, engine3 = setup_model(
+model, engine = setup_model(
     yield_ts, dividend_ts, spot, 
-    init_condition=(0.02,0.2,0.5,0.1,0.01))
-heston_helpers3, grid_data3 = setup_helpers(
-    engine3, expiration_dates, strikes, data,
+    init_condition=(0.43,5,0.6,-0.5,0.5))
+    # 0.02, 0.2, 0.5, 0.1, 0.01  코딩 첫번째
+    # 0.07, 0.5, 0.1, 0.1, 0.1  코딩 두번째
+    # 0.05,5,0.6,-0.5,0.5  논문내용
+    # theta, kappa, sigma, rho, v0 = init_condition
+heston_helpers, grid_data = setup_helpers(
+    engine, expiration_dates, strikes, data,
     calculation_date, spot, yield_ts, dividend_ts
 )
-initial_condition = list(model3.params())
-
-cost_function = cost_function_generator(model3, heston_helpers3)
+initial_condition = list(model.params())
+cost_function = cost_function_generator(model, heston_helpers)
 sol = least_squares(cost_function, initial_condition)
-theta, kappa, sigma, rho, v0 = model3.params()
+theta, kappa, sigma, rho, v0 = model.params()
 print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
     (theta, kappa, sigma, rho, v0))
-error = calibration_report(heston_helpers3, grid_data3, detailed=0)
-
-# ## 여기는 필요할까. Pricing
-# maturity_date = ql.Date(15, 1, 2016) # 만기일 (일, 월, 년) check
-# strike_price = 130 # 행사가 check
-# option_type = ql.Option.Call
-# payoff = ql.PlainVanillaPayoff(option_type, strike_price)
-# exercise = ql.EuropeanExercise(maturity_date)
-# european_option = ql.VanillaOption(payoff, exercise)
-# european_option.setPricingEngine(engine3)
-# h_price = european_option.NPV()
-# print("The Heston model price is",h_price)
+error = calibration_report(heston_helpers, grid_data, detailed=0)
