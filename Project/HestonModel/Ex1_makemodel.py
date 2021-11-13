@@ -4,7 +4,6 @@ import QuantLib as ql
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import simps, cumtrapz, romb
-import math
 
 # option data
 maturity_date = ql.Date(3, 12, 2021)
@@ -16,14 +15,12 @@ option_type = ql.Option.Call
 risk_free_rate = 0.001 
 day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
-
 calculation_date = ql.Date(2, 11, 2021) # 평가 기준일
 ql.Settings.instance().evaluationDate = calculation_date
 # construct the European Option
 payoff = ql.PlainVanillaPayoff(option_type, strike_price)
 exercise = ql.EuropeanExercise(maturity_date)
 european_option = ql.VanillaOption(payoff, exercise)
-
 # construct the Heston process
 v0 = .0104529950 
 kappa = 0.859031
