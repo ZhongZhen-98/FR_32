@@ -2,8 +2,6 @@ import QuantLib as ql
 import numpy as np
 from scipy.optimize import root, least_squares
 
-print('\n')
-print('\n')
 day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
 calculation_date = ql.Date(19, 11, 2021) # 평가일
@@ -132,5 +130,3 @@ european_option = ql.VanillaOption(payoff, exercise)
 european_option.setPricingEngine(heston_engine)
 h_price = european_option.NPV()
 print("The Heston model price is",h_price)
-print('\n')
-print('\n')
