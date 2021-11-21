@@ -7,52 +7,38 @@ from scipy.optimize import root
 
 day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
-calculation_date = ql.Date(6, 11, 2015)
+calculation_date = ql.Date(18, 11, 2021)
 
-spot = 659.37
+spot = 1.13370
 ql.Settings.instance().evaluationDate = calculation_date
 
-risk_free_rate = 0.01
-dividend_rate = 0.0
+risk_free_rate = 0.0005
+dividend_rate = -0.00558
 yield_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, risk_free_rate, day_count))
 dividend_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, dividend_rate, day_count))
 
-expiration_dates = [ql.Date(6,12,2015), ql.Date(6,1,2016), ql.Date(6,2,2016),
-                    ql.Date(6,3,2016), ql.Date(6,4,2016), ql.Date(6,5,2016), 
-                    ql.Date(6,6,2016), ql.Date(6,7,2016), ql.Date(6,8,2016),
-                    ql.Date(6,9,2016), ql.Date(6,10,2016), ql.Date(6,11,2016), 
-                    ql.Date(6,12,2016), ql.Date(6,1,2017), ql.Date(6,2,2017),
-                    ql.Date(6,3,2017), ql.Date(6,4,2017), ql.Date(6,5,2017), 
-                    ql.Date(6,6,2017), ql.Date(6,7,2017), ql.Date(6,8,2017),
-                    ql.Date(6,9,2017), ql.Date(6,10,2017), ql.Date(6,11,2017)]
-strikes = [527.50, 560.46, 593.43, 626.40, 659.37, 692.34, 725.31, 758.28]
+expiration_dates = [ql.Date(3,12,2021), ql.Date(7,1,2022),
+                    ql.Date(4,2,2022), ql.Date(4,3,2022), ql.Date(8,4,2022), 
+                    ql.Date(6,5,2022), ql.Date(3,6,2022), ql.Date(8,7,2022),
+                    ql.Date(5,8,2022), ql.Date(9,9,2022), ql.Date(7,10,2022), 
+                    ql.Date(4,11,2022)]
+
+strikes = [1.10000, 1.11000, 1.12000, 1.13000, 1.14000, 1.15000, 1.16000, 1.17000, 1.18000, 1.19000, 1.20000]
 data = [
-[0.37819, 0.34177, 0.30394, 0.27832, 0.26453, 0.25916, 0.25941, 0.26127],
-[0.3445, 0.31769, 0.2933, 0.27614, 0.26575, 0.25729, 0.25228, 0.25202],
-[0.37419, 0.35372, 0.33729, 0.32492, 0.31601, 0.30883, 0.30036, 0.29568],
-[0.37498, 0.35847, 0.34475, 0.33399, 0.32715, 0.31943, 0.31098, 0.30506],
-[0.35941, 0.34516, 0.33296, 0.32275, 0.31867, 0.30969, 0.30239, 0.29631],
-[0.35521, 0.34242, 0.33154, 0.3219, 0.31948, 0.31096, 0.30424, 0.2984],
-[0.35442, 0.34267, 0.33288, 0.32374, 0.32245, 0.31474, 0.30838, 0.30283],
-[0.35384, 0.34286, 0.33386, 0.32507, 0.3246, 0.31745, 0.31135, 0.306],
-[0.35338, 0.343, 0.33464, 0.32614, 0.3263, 0.31961, 0.31371, 0.30852],
-[0.35301, 0.34312, 0.33526, 0.32698, 0.32766, 0.32132, 0.31558, 0.31052],
-[0.35272, 0.34322, 0.33574, 0.32765, 0.32873, 0.32267, 0.31705, 0.31209],
-[0.35246, 0.3433, 0.33617, 0.32822, 0.32965, 0.32383, 0.31831, 0.31344],
-[0.35226, 0.34336, 0.33651, 0.32869, 0.3304, 0.32477, 0.31934, 0.31453],
-[0.35207, 0.34342, 0.33681, 0.32911, 0.33106, 0.32561, 0.32025, 0.3155],
-[0.35171, 0.34327, 0.33679, 0.32931, 0.3319, 0.32665, 0.32139, 0.31675],
-[0.35128, 0.343, 0.33658, 0.32937, 0.33276, 0.32769, 0.32255, 0.31802],
-[0.35086, 0.34274, 0.33637, 0.32943, 0.3336, 0.32872, 0.32368, 0.31927],
-[0.35049, 0.34252, 0.33618, 0.32948, 0.33432, 0.32959, 0.32465, 0.32034],
-[0.35016, 0.34231, 0.33602, 0.32953, 0.33498, 0.3304, 0.32554, 0.32132],
-[0.34986, 0.34213, 0.33587, 0.32957, 0.33556, 0.3311, 0.32631, 0.32217],
-[0.34959, 0.34196, 0.33573, 0.32961, 0.3361, 0.33176, 0.32704, 0.32296],
-[0.34934, 0.34181, 0.33561, 0.32964, 0.33658, 0.33235, 0.32769, 0.32368],
-[0.34912, 0.34167, 0.3355, 0.32967, 0.33701, 0.33288, 0.32827, 0.32432],
-[0.34891, 0.34154, 0.33539, 0.3297, 0.33742, 0.33337, 0.32881, 0.32492]]
+[0.0259, 0.0636, 0.0628, 0.0649, 0.0620, 0.0651, 0.0655, 0.0818, 0.0787, 0.0943, 0.1067],
+[0.0653, 0.0597, 0.0627, 0.0612, 0.0600, 0.0607, 0.0620, 0.0624, 0.0628, 0.0682, 0.0741],
+[0.0647, 0.0641, 0.0625, 0.0613, 0.0598, 0.0596, 0.0593, 0.0612, 0.0628, 0.0645, 0.0679],
+[0.0644, 0.0630, 0.0614, 0.0598, 0.0593, 0.0593, 0.0588, 0.0605, 0.0601, 0.0614, 0.0645],
+[0.0650, 0.0631, 0.0619, 0.0603, 0.0595, 0.0590, 0.0588, 0.0594, 0.0593, 0.0610, 0.0624],
+[0.0675, 0.0659, 0.0643, 0.0627, 0.0618, 0.0609, 0.0606, 0.0605, 0.0610, 0.0622, 0.0628],
+[0.0664, 0.0649, 0.0634, 0.0621, 0.0609, 0.0605, 0.0601, 0.0605, 0.0608, 0.0610, 0.0618],
+[0.0697, 0.0675, 0.0659, 0.0640, 0.0627, 0.0618, 0.0610, 0.0609, 0.0611, 0.0617, 0.0622],
+[0.0687, 0.0670, 0.0650, 0.0637, 0.0623, 0.0613, 0.0610, 0.0608, 0.0610, 0.0612, 0.0618],
+[0.0678, 0.0659, 0.0644, 0.0630, 0.0622, 0.0613, 0.0609, 0.0585, 0.0606, 0.0609, 0.0614],
+[0.0660, 0.0646, 0.0631, 0.0621, 0.0610, 0.0603, 0.0598, 0.0596, 0.0597, 0.0602, 0.0606],
+[0.0655, 0.0640, 0.0627, 0.0616, 0.0607, 0.0601, 0.0596, 0.0595, 0.0596, 0.0600, 0.0603]]
 
 def setup_helpers(engine, expiration_dates, strikes, 
                   data, ref_date, spot, yield_ts, 
@@ -119,75 +105,75 @@ def setup_model(_yield_ts, _dividend_ts, _spot,
 summary= []
 
 
-# model1, engine1 = setup_model(
-#     yield_ts, dividend_ts, spot, 
-#     init_condition=(0.02,0.2,0.5,0.1,0.01))
-# heston_helpers1, grid_data1 = setup_helpers(
-#     engine1, expiration_dates, strikes, data, 
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model1.params())
+model1, engine1 = setup_model(
+    yield_ts, dividend_ts, spot, 
+    init_condition=(0.02,0.2,0.5,0.1,0.01))
+heston_helpers1, grid_data1 = setup_helpers(
+    engine1, expiration_dates, strikes, data, 
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model1.params())
 
-# lm = ql.LevenbergMarquardt(1e-8, 1e-8, 1e-8)
-# model1.calibrate(heston_helpers1, lm, 
-#                  ql.EndCriteria(500, 300, 1.0e-8,1.0e-8, 1.0e-8))
-# theta, kappa, sigma, rho, v0 = model1.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#     (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers1, grid_data1)
-# summary.append(["QL LM1", error] + list(model1.params()))
+lm = ql.LevenbergMarquardt(1e-8, 1e-8, 1e-8)
+model1.calibrate(heston_helpers1, lm, 
+                 ql.EndCriteria(500, 300, 1.0e-8,1.0e-8, 1.0e-8))
+theta, kappa, sigma, rho, v0 = model1.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+    (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers1, grid_data1)
+summary.append(["QL LM1", error] + list(model1.params()))
 
-# model1, engine1 = setup_model(
-#     yield_ts, dividend_ts, spot, 
-#     init_condition=(0.07,0.5,0.1,0.1,0.1))
-# heston_helpers1, grid_data1 = setup_helpers(
-#     engine1, expiration_dates, strikes, data, 
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model1.params())
+model1, engine1 = setup_model(
+    yield_ts, dividend_ts, spot, 
+    init_condition=(0.07,0.5,0.1,0.1,0.1))
+heston_helpers1, grid_data1 = setup_helpers(
+    engine1, expiration_dates, strikes, data, 
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model1.params())
 
-# lm = ql.LevenbergMarquardt(1e-8, 1e-8, 1e-8)
-# model1.calibrate(heston_helpers1, lm, 
-#                  ql.EndCriteria(500, 300, 1.0e-8,1.0e-8, 1.0e-8))
-# theta, kappa, sigma, rho, v0 = model1.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#     (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers1, grid_data1)
-# summary.append(["QL LM2", error] + list(model1.params()))
+lm = ql.LevenbergMarquardt(1e-8, 1e-8, 1e-8)
+model1.calibrate(heston_helpers1, lm, 
+                 ql.EndCriteria(500, 300, 1.0e-8,1.0e-8, 1.0e-8))
+theta, kappa, sigma, rho, v0 = model1.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+    (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers1, grid_data1)
+summary.append(["QL LM2", error] + list(model1.params()))
 
-# model2, engine2 = setup_model(
-#     yield_ts, dividend_ts, spot, 
-#     init_condition=(0.02,0.2,0.5,0.1,0.01))
-# heston_helpers2, grid_data2 = setup_helpers(
-#     engine2, expiration_dates, strikes, data,
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model2.params())
+model2, engine2 = setup_model(
+    yield_ts, dividend_ts, spot, 
+    init_condition=(0.02,0.2,0.5,0.1,0.01))
+heston_helpers2, grid_data2 = setup_helpers(
+    engine2, expiration_dates, strikes, data,
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model2.params())
 
-# cost_function = cost_function_generator(model2, heston_helpers2)
-# sol = root(cost_function, initial_condition, method='lm')
-# theta, kappa, sigma, rho, v0 = model2.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#     (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers2, grid_data2)
-# summary.append(["Scipy LM1", error] + list(model2.params()))
+cost_function = cost_function_generator(model2, heston_helpers2)
+sol = root(cost_function, initial_condition, method='lm')
+theta, kappa, sigma, rho, v0 = model2.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+    (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers2, grid_data2)
+summary.append(["Scipy LM1", error] + list(model2.params()))
 
-# model2, engine2 = setup_model(
-#     yield_ts, dividend_ts, spot,
-#     init_condition=(0.07,0.5,0.1,0.1,0.1))
-# heston_helpers2, grid_data2 = setup_helpers(
-#     engine2, expiration_dates, strikes, data,
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model2.params())
+model2, engine2 = setup_model(
+    yield_ts, dividend_ts, spot,
+    init_condition=(0.07,0.5,0.1,0.1,0.1))
+heston_helpers2, grid_data2 = setup_helpers(
+    engine2, expiration_dates, strikes, data,
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model2.params())
 
-# cost_function = cost_function_generator(model2, heston_helpers2)
-# sol = root(cost_function, initial_condition, method='lm')
-# theta, kappa, sigma, rho, v0 = model2.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#     (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers2, grid_data2)
-# summary.append(["Scipy LM2", error] + list(model2.params()))
+cost_function = cost_function_generator(model2, heston_helpers2)
+sol = root(cost_function, initial_condition, method='lm')
+theta, kappa, sigma, rho, v0 = model2.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+    (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers2, grid_data2)
+summary.append(["Scipy LM2", error] + list(model2.params()))
 
 from scipy.optimize import least_squares
 
@@ -225,105 +211,105 @@ print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
 error = calibration_report(heston_helpers3, grid_data3)
 summary.append(["Scipy LS2", error] + list(model3.params()))
 
-# from scipy.optimize import differential_evolution
+from scipy.optimize import differential_evolution
 
-# model4, engine4 = setup_model(yield_ts, dividend_ts, spot)
-# heston_helpers4, grid_data4 = setup_helpers(
-#     engine4, expiration_dates, strikes, data,
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model4.params())
-# bounds = [(0,1),(0.01,15), (0.01,1.), (-1,1), (0,1.0) ]
+model4, engine4 = setup_model(yield_ts, dividend_ts, spot)
+heston_helpers4, grid_data4 = setup_helpers(
+    engine4, expiration_dates, strikes, data,
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model4.params())
+bounds = [(0,1),(0.01,15), (0.01,1.), (-1,1), (0,1.0) ]
 
-# cost_function = cost_function_generator(
-#     model4, heston_helpers4, norm=True)
-# sol = differential_evolution(cost_function, bounds, maxiter=100)
-# theta, kappa, sigma, rho, v0 = model4.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#      (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers4, grid_data4)
-# summary.append(["Scipy DE1", error] + list(model4.params()))
+cost_function = cost_function_generator(
+    model4, heston_helpers4, norm=True)
+sol = differential_evolution(cost_function, bounds, maxiter=100)
+theta, kappa, sigma, rho, v0 = model4.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+     (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers4, grid_data4)
+summary.append(["Scipy DE1", error] + list(model4.params()))
 
-# model4, engine4 = setup_model(yield_ts, dividend_ts, spot)
-# heston_helpers4, grid_data4 = setup_helpers(
-#     engine4, expiration_dates, strikes, data,
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model4.params())
-# bounds = [(0,1),(0.01,15), (0.01,1.), (-1,1), (0,1.0) ]
+model4, engine4 = setup_model(yield_ts, dividend_ts, spot)
+heston_helpers4, grid_data4 = setup_helpers(
+    engine4, expiration_dates, strikes, data,
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model4.params())
+bounds = [(0,1),(0.01,15), (0.01,1.), (-1,1), (0,1.0) ]
 
-# cost_function = cost_function_generator(
-#     model4, heston_helpers4, norm=True)
-# sol = differential_evolution(cost_function, bounds, maxiter=100)
-# theta, kappa, sigma, rho, v0 = model4.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#      (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers4, grid_data4)
-# summary.append(["Scipy DE2", error] + list(model4.params()))
+cost_function = cost_function_generator(
+    model4, heston_helpers4, norm=True)
+sol = differential_evolution(cost_function, bounds, maxiter=100)
+theta, kappa, sigma, rho, v0 = model4.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+     (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers4, grid_data4)
+summary.append(["Scipy DE2", error] + list(model4.params()))
 
-# from scipy.optimize import basinhopping
+from scipy.optimize import basinhopping
 
-# class MyBounds(object):
-#      def __init__(self, xmin=[0.,0.01,0.01,-1,0], xmax=[1,15,1,1,1.0] ):
-#          self.xmax = np.array(xmax)
-#          self.xmin = np.array(xmin)
-#      def __call__(self, **kwargs):
-#          x = kwargs["x_new"]
-#          tmax = bool(np.all(x <= self.xmax))
-#          tmin = bool(np.all(x >= self.xmin))
-#          return tmax and tmin
-# bounds = [(0,1),(0.01,15), (0.01,1.), (-1,1), (0,1.0) ]
+class MyBounds(object):
+     def __init__(self, xmin=[0.,0.01,0.01,-1,0], xmax=[1,15,1,1,1.0] ):
+         self.xmax = np.array(xmax)
+         self.xmin = np.array(xmin)
+     def __call__(self, **kwargs):
+         x = kwargs["x_new"]
+         tmax = bool(np.all(x <= self.xmax))
+         tmin = bool(np.all(x >= self.xmin))
+         return tmax and tmin
+bounds = [(0,1),(0.01,15), (0.01,1.), (-1,1), (0,1.0) ]
 
-# model5, engine5 = setup_model(
-#     yield_ts, dividend_ts, spot,
-#     init_condition=(0.02,0.2,0.5,0.1,0.01))
-# heston_helpers5, grid_data5 = setup_helpers(
-#     engine5, expiration_dates, strikes, data,
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model5.params())
+model5, engine5 = setup_model(
+    yield_ts, dividend_ts, spot,
+    init_condition=(0.02,0.2,0.5,0.1,0.01))
+heston_helpers5, grid_data5 = setup_helpers(
+    engine5, expiration_dates, strikes, data,
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model5.params())
 
-# mybound = MyBounds()
-# minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds }
-# cost_function = cost_function_generator(
-#     model5, heston_helpers5, norm=True)
-# sol = basinhopping(cost_function, initial_condition, niter=5,
-#                    minimizer_kwargs=minimizer_kwargs,
-#                    stepsize=0.005,
-#                    accept_test=mybound,
-#                    interval=10)
-# theta, kappa, sigma, rho, v0 = model5.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#     (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers5, grid_data5)
-# summary.append(["Scipy BH1", error] + list(model5.params()))
+mybound = MyBounds()
+minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds }
+cost_function = cost_function_generator(
+    model5, heston_helpers5, norm=True)
+sol = basinhopping(cost_function, initial_condition, niter=5,
+                   minimizer_kwargs=minimizer_kwargs,
+                   stepsize=0.005,
+                   accept_test=mybound,
+                   interval=10)
+theta, kappa, sigma, rho, v0 = model5.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+    (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers5, grid_data5)
+summary.append(["Scipy BH1", error] + list(model5.params()))
 
-# model5, engine5 = setup_model(
-#     yield_ts, dividend_ts, spot,
-#     init_condition=(0.07,0.5,0.1,0.1,0.1))
-# heston_helpers5, grid_data5 = setup_helpers(
-#     engine5, expiration_dates, strikes, data,
-#     calculation_date, spot, yield_ts, dividend_ts
-# )
-# initial_condition = list(model5.params())
+model5, engine5 = setup_model(
+    yield_ts, dividend_ts, spot,
+    init_condition=(0.07,0.5,0.1,0.1,0.1))
+heston_helpers5, grid_data5 = setup_helpers(
+    engine5, expiration_dates, strikes, data,
+    calculation_date, spot, yield_ts, dividend_ts
+)
+initial_condition = list(model5.params())
 
-# mybound = MyBounds()
-# minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds}
-# cost_function = cost_function_generator(
-#     model5, heston_helpers5, norm=True)
-# sol = basinhopping(cost_function, initial_condition, niter=5,
-#                    minimizer_kwargs=minimizer_kwargs,
-#                    stepsize=0.005,
-#                    accept_test=mybound,
-#                    interval=10)
-# theta, kappa, sigma, rho, v0 = model5.params()
-# print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
-#     (theta, kappa, sigma, rho, v0))
-# error = calibration_report(heston_helpers5, grid_data5)
-# summary.append(["Scipy BH2", error] + list(model5.params()))
+mybound = MyBounds()
+minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds}
+cost_function = cost_function_generator(
+    model5, heston_helpers5, norm=True)
+sol = basinhopping(cost_function, initial_condition, niter=5,
+                   minimizer_kwargs=minimizer_kwargs,
+                   stepsize=0.005,
+                   accept_test=mybound,
+                   interval=10)
+theta, kappa, sigma, rho, v0 = model5.params()
+print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
+    (theta, kappa, sigma, rho, v0))
+error = calibration_report(heston_helpers5, grid_data5)
+summary.append(["Scipy BH2", error] + list(model5.params()))
 
-# from pandas import DataFrame
-# DataFrame(
-#     summary,
-#     columns=["Name", "Avg Abs Error","Theta", "Kappa", "Sigma", "Rho", "V0"],
-#     index=['']*len(summary))
+from pandas import DataFrame
+DataFrame(
+    summary,
+    columns=["Name", "Avg Abs Error","Theta", "Kappa", "Sigma", "Rho", "V0"],
+    index=['']*len(summary))

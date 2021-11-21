@@ -9,32 +9,40 @@ from scipy.integrate import simps, cumtrapz, romb
 
 day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
-calculation_date = ql.Date(15, 11, 2015)
+calculation_date = ql.Date(18, 11, 2021)
 maturity_date = ql.Date(3, 12, 2021)
-spot_price = 1.14535
-strike_price = 1.06000 
+spot_price = 1.13370
+strike_price = 1.1650
 option_type = ql.Option.Call
 ql.Settings.instance().evaluationDate = calculation_date
 
-risk_free_rate = 0.0583
-foreign_rate = 0.072
+risk_free_rate = 0.0005
+foreign_rate = -0.00558
 yield_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, risk_free_rate, day_count))
 foreignrate_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, foreign_rate, day_count))
 
-expiration_dates = [ql.Date(22,11,2021), ql.Date(29,11,2021), ql.Date(14,12,2021),
-                    ql.Date(14,1,2022), ql.Date(14,2,2022), ql.Date(12,5,2022), 
-                    ql.Date(14,11,2022)]
-strikes = [1.1420, 1.1430, 1.1440, 1.1450, 1.1460, 1.1470, 1.1480, 1.1490]
+expiration_dates = [ql.Date(3,12,2021), ql.Date(7,1,2022),
+                    ql.Date(4,2,2022), ql.Date(4,3,2022), ql.Date(8,4,2022), 
+                    ql.Date(6,5,2022), ql.Date(3,6,2022), ql.Date(8,7,2022),
+                    ql.Date(5,8,2022), ql.Date(9,9,2022), ql.Date(7,10,2022), 
+                    ql.Date(4,11,2022)]
+
+strikes = [1.10000, 1.11000, 1.12000, 1.13000, 1.14000, 1.15000, 1.16000, 1.17000, 1.18000, 1.19000, 1.20000]
 data = [
-[0.0537819, 0.0534177, 0.0530394, 0.0527832, 0.0526453, 0.0525916, 0.0525941, 0.5026127],
-[0.0534450, 0.0531769, 0.0529330, 0.0527614, 0.0526575, 0.0525729, 0.0525228, 0.5025202],
-[0.0537419, 0.0535372, 0.0533729, 0.0532492, 0.0531601, 0.0530883, 0.0530036, 0.5029568],
-[0.0537498, 0.0535847, 0.0534475, 0.0533399, 0.0532715, 0.0531943, 0.0531098, 0.5030506],
-[0.0535941, 0.0534516, 0.0533296, 0.0532275, 0.0531867, 0.0530969, 0.0530239, 0.5029631],
-[0.0535521, 0.0534242, 0.0533154, 0.0532190, 0.0531948, 0.0531096, 0.0530424, 0.5029840],
-[0.0535442, 0.0534267, 0.0533288, 0.0532374, 0.0532245, 0.0531474, 0.0530838, 0.5030283]]
+[0.0259, 0.0636, 0.0628, 0.0649, 0.0620, 0.0651, 0.0655, 0.0818, 0.0787, 0.0943, 0.1067],
+[0.0653, 0.0597, 0.0627, 0.0612, 0.0600, 0.0607, 0.0620, 0.0624, 0.0628, 0.0682, 0.0741],
+[0.0647, 0.0641, 0.0625, 0.0613, 0.0598, 0.0596, 0.0593, 0.0612, 0.0628, 0.0645, 0.0679],
+[0.0644, 0.0630, 0.0614, 0.0598, 0.0593, 0.0593, 0.0588, 0.0605, 0.0601, 0.0614, 0.0645],
+[0.0650, 0.0631, 0.0619, 0.0603, 0.0595, 0.0590, 0.0588, 0.0594, 0.0593, 0.0610, 0.0624],
+[0.0675, 0.0659, 0.0643, 0.0627, 0.0618, 0.0609, 0.0606, 0.0605, 0.0610, 0.0622, 0.0628],
+[0.0664, 0.0649, 0.0634, 0.0621, 0.0609, 0.0605, 0.0601, 0.0605, 0.0608, 0.0610, 0.0618],
+[0.0697, 0.0675, 0.0659, 0.0640, 0.0627, 0.0618, 0.0610, 0.0609, 0.0611, 0.0617, 0.0622],
+[0.0687, 0.0670, 0.0650, 0.0637, 0.0623, 0.0613, 0.0610, 0.0608, 0.0610, 0.0612, 0.0618],
+[0.0678, 0.0659, 0.0644, 0.0630, 0.0622, 0.0613, 0.0609, 0.0585, 0.0606, 0.0609, 0.0614],
+[0.0660, 0.0646, 0.0631, 0.0621, 0.0610, 0.0603, 0.0598, 0.0596, 0.0597, 0.0602, 0.0606],
+[0.0655, 0.0640, 0.0627, 0.0616, 0.0607, 0.0601, 0.0596, 0.0595, 0.0596, 0.0600, 0.0603]]
 
 def setup_helpers(engine, expiration_dates, strikes, 
                   data, ref_date, spot_price, yield_ts, 
@@ -101,8 +109,9 @@ def setup_model(_yield_ts, _dividend_ts, _spot_price,
 
 heston_model, heston_engine = setup_model(
     yield_ts, foreignrate_ts, spot_price, 
-    init_condition=(0.02,0.2,0.5,0.1,0.01)
+    init_condition=(0.005,10,0.05,0.1,0.005)
 )
+# init_condition=(0.02,1.0,0.5,0.1,0.01)
 heston_helpers, grid_data = setup_helpers(
     heston_engine, expiration_dates, strikes, data,
     calculation_date, spot_price, yield_ts, foreignrate_ts
@@ -110,6 +119,9 @@ heston_helpers, grid_data = setup_helpers(
 initial_condition = list(heston_model.params())
 
 cost_function = cost_function_generator(heston_model, heston_helpers)
+
+# print(np.isfinite(np.atleast_1d(cost_function(initial_condition)))) # sol 이 잘 되는지 확인 
+
 sol = least_squares(cost_function, initial_condition)
 
 theta, kappa, sigma, rho, v0 = heston_model.params()

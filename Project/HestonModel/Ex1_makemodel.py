@@ -9,7 +9,7 @@ from scipy.integrate import simps, cumtrapz, romb
 maturity_date = ql.Date(3, 12, 2021)
 spot_price = 11597.5 
 strike_price = 10600.0 
-volatility = 0.20 
+# volatility = 0.20 
 dividend_rate =  0.0 
 option_type = ql.Option.Call
 risk_free_rate = 0.001 
