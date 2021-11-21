@@ -1,23 +1,20 @@
-# http://gouthamanbalaraman.com/blog/heston-calibration-scipy-optimize-quantlib-python.html
-
 import QuantLib as ql
-from math import pow, sqrt
 import numpy as np
 from scipy.optimize import root, least_squares
-from scipy.integrate import simps, cumtrapz, romb
 
-
+print('\n')
+print('\n')
 day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
-calculation_date = ql.Date(18, 11, 2021)
-maturity_date = ql.Date(3, 12, 2021)
-spot_price = 1.13370
-strike_price = 1.1650
-option_type = ql.Option.Call
+calculation_date = ql.Date(19, 11, 2021) # 평가일
+maturity_date = ql.Date(3, 12, 2021) # 만기일
+spot_price = 1.13370 # 기초자산 가격
+strike_price = 1.1650 # 행사가
+option_type = ql.Option.Call # 옵션 타입(콜, 풋)
 ql.Settings.instance().evaluationDate = calculation_date
 
-risk_free_rate = 0.0005
-foreign_rate = -0.00558
+risk_free_rate = 0.0005 # 미국 무위험 이자율(3개월 T-bill)
+foreign_rate = -0.00558 # 유로 무위험 이자율(EuLibor)
 yield_ts = ql.YieldTermStructureHandle(
     ql.FlatForward(calculation_date, risk_free_rate, day_count))
 foreignrate_ts = ql.YieldTermStructureHandle(
@@ -120,8 +117,6 @@ initial_condition = list(heston_model.params())
 
 cost_function = cost_function_generator(heston_model, heston_helpers)
 
-# print(np.isfinite(np.atleast_1d(cost_function(initial_condition)))) # sol 이 잘 되는지 확인 
-
 sol = least_squares(cost_function, initial_condition)
 
 theta, kappa, sigma, rho, v0 = heston_model.params()
@@ -129,7 +124,6 @@ print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
     (theta, kappa, sigma, rho, v0))
 error = calibration_report(heston_helpers, grid_data)
 
-# construct the European Option
 payoff = ql.PlainVanillaPayoff(option_type, strike_price)
 exercise = ql.EuropeanExercise(maturity_date)
 european_option = ql.VanillaOption(payoff, exercise)
@@ -138,3 +132,5 @@ european_option = ql.VanillaOption(payoff, exercise)
 european_option.setPricingEngine(heston_engine)
 h_price = european_option.NPV()
 print("The Heston model price is",h_price)
+print('\n')
+print('\n')
