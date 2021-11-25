@@ -6,8 +6,8 @@ day_count = ql.Actual365Fixed()
 calendar = ql.UnitedStates()
 calculation_date = ql.Date(19, 11, 2021) # 평가일
 maturity_date = ql.Date(3, 12, 2021) # 만기일
-spot_price = 1.13370 # 기초자산 가격
-strike_price = 1.1650 # 행사가
+spot_price = 1.12870 # 기초자산 가격
+strike_price = 1.1275 # 행사가
 option_type = ql.Option.Call # 옵션 타입(콜, 풋)
 ql.Settings.instance().evaluationDate = calculation_date
 
@@ -104,8 +104,9 @@ def setup_model(_yield_ts, _dividend_ts, _spot_price,
 
 heston_model, heston_engine = setup_model(
     yield_ts, foreignrate_ts, spot_price, 
-    init_condition=(0.005,10,0.05,0.1,0.005)
+    init_condition=(0.003520, 14.363602, 0.078768, 1.0, 0.003411)
 )
+    # init_condition=(0.003520, 14.361807, 0.072945, 1.0, 0.003281) 12.57%
 # init_condition=(0.02,1.0,0.5,0.1,0.01)
 heston_helpers, grid_data = setup_helpers(
     heston_engine, expiration_dates, strikes, data,
@@ -118,9 +119,11 @@ cost_function = cost_function_generator(heston_model, heston_helpers)
 sol = least_squares(cost_function, initial_condition)
 
 theta, kappa, sigma, rho, v0 = heston_model.params()
+print()
 print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
     (theta, kappa, sigma, rho, v0))
-error = calibration_report(heston_helpers, grid_data)
+# error = calibration_report(heston_helpers, grid_data)
+
 
 payoff = ql.PlainVanillaPayoff(option_type, strike_price)
 exercise = ql.EuropeanExercise(maturity_date)
@@ -130,3 +133,5 @@ european_option = ql.VanillaOption(payoff, exercise)
 european_option.setPricingEngine(heston_engine)
 h_price = european_option.NPV()
 print("The Heston model price is",h_price)
+print("The Market price is",0.00680)
+print()
