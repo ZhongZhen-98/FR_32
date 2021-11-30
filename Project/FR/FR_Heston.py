@@ -119,7 +119,6 @@ cost_function = cost_function_generator(heston_model, heston_helpers)
 sol = least_squares(cost_function, initial_condition)
 
 theta, kappa, sigma, rho, v0 = heston_model.params()
-print()
 print("theta = %f, kappa = %f, sigma = %f, rho = %f, v0 = %f" % \
     (theta, kappa, sigma, rho, v0))
 # error = calibration_report(heston_helpers, grid_data)
@@ -134,4 +133,3 @@ european_option.setPricingEngine(heston_engine)
 h_price = european_option.NPV()
 print("The Heston model price is",h_price)
 print("The Market price is",0.00680)
-print()

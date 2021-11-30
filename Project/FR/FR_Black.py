@@ -38,27 +38,11 @@ print("Option Vega(Historical Volatility) ", option.vega() / 100) # Vega
 print("Option Rho(Historical Volatility) ", option.rho() / 100) # Rho
 print('\n')
 
-volatility_qt = ql.SimpleQuote(0.1321935077235403)
-ql.Settings.instance().evaluationDate = valuationDate
-calendar = ql.UnitedStates()
-dayCount = ql.ActualActual()
 
-u_qhd = ql.QuoteHandle(underlying_qt)
-r_thd = ql.YieldTermStructureHandle(ql.FlatForward(valuationDate, ql.QuoteHandle(riskfreerate_qt), dayCount))
-d_thd = ql.YieldTermStructureHandle(ql.FlatForward(valuationDate, ql.QuoteHandle(foreignrate_qt), dayCount))
-v_thd = ql.BlackVolTermStructureHandle(ql.BlackConstantVol(valuationDate, calendar, ql.QuoteHandle(volatility_qt), dayCount))
-
-process = ql.BlackScholesMertonProcess(ql.QuoteHandle(underlying_qt), d_thd, r_thd, v_thd)
-engine = ql.AnalyticEuropeanEngine(process)
-exercise = ql.EuropeanExercise(expiryDate)
-payoff = ql.PlainVanillaPayoff(option_type, strikePrice)
-option = ql.VanillaOption(payoff, exercise)
-option.setPricingEngine(engine)
 # implied volatility
-# implied_volaitility = option.impliedVolatility(mkt_price, process)
-# volatility_qt.setValue(volatility_qt)
-print("Implied Volaitility ", 0.1321935077235403)
-
+implied_volaitility = option.impliedVolatility(mkt_price, process)
+volatility_qt.setValue(implied_volaitility)
+print("Implied Volaitility ", implied_volaitility)
 print("Option price(Implied Volaitility) ", option.NPV()) # 내재변동성 적용한 옵션가
 print("Option delta(Implied Volaitility) ", option.delta()) # Delta
 print("Option gamma(Implied Volaitility) ", option.gamma()) # Gamma
